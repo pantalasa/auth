@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   auth_service_build:
-    runs-on: lunar-demo
+    runs-on: localdev-nacho3
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
