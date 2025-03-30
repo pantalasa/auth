@@ -18,8 +18,9 @@ jobs:
           clean: true
       - name: Install dependencies
         run: |
-          pip wheel -r requirements.txt --wheel-dir=wheels
+          python3 -m venv ./venv
+          ./venv/bin/pip wheel -r requirements.txt --wheel-dir=wheels
       - name: Run tests
         run: |
-          pip install --no-index --find-links=wheels -r requirements.txt 
-          python -m pytest
+          ./venv/pip install --no-index --find-links=wheels -r requirements.txt 
+          ./venv/python -m pytest
