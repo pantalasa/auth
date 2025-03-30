@@ -22,5 +22,5 @@ jobs:
           ./venv/bin/pip wheel -r requirements.txt --wheel-dir=wheels
       - name: Run tests
         run: |
-          ./venv/pip install --no-index --find-links=wheels -r requirements.txt 
-          ./venv/python -m pytest
+          ./venv/bin/pip install --no-index --find-links=wheels -r requirements.txt 
+          ./venv/bin/python -m pytest
