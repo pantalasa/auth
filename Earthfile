@@ -1,0 +1,30 @@
+VERSION 0.8
+
+PROJECT earthly-technologies/earthly-demo
+
+FROM python:3 
+WORKDIR /py 
+
+deps:
+  RUN pip install wheel 
+  COPY requirements.txt ./ 
+  RUN pip wheel -r requirements.txt --wheel-dir=wheels
+
+
+build:
+  FROM +deps 
+  COPY src src 
+  SAVE ARTIFACT src /src
+  SAVE ARTIFACT wheels /wheels 
+  SAVE ARTIFACT quotes.txt ./
+
+
+test:
+  COPY +build/src src 
+  COPY +build/wheels wheels 
+  COPY +build/quotes.txt quotes.txt
+  COPY requirements.txt ./
+  RUN pip install --no-index --find-links=wheels -r requirements.txt 
+  RUN python src/test_quotes.py 
+
+
