@@ -1,0 +1,19 @@
+{
+  "service": {
+    "name": "auth",
+    "owner": "dane@pantalasa.org",
+    "domain": "engineering.core",
+    "tier": "tier-2"
+  },
+  "deployment": {
+    "platform": "kubernetes",
+    "region": "us-east-1",
+    "replicas": 2,
+    "rollout_strategy": "rolling"
+  },
+  "business": {
+    "capability": "authentication",
+    "cost_center": "CC-1050",
+    "compliance": []
+  }
+}

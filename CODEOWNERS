@@ -1,3 +1,3 @@
-# These owners will be the default owners for everything in
-# the repo. Unless a later match takes precedence,
-* @pantalasa-core
+# Default owners for everything in this repository.
+# Team-based ownership for continuity (no single-person bus factor).
+* @pantalasa/engineering @pantalasa/core
