@@ -1,27 +1,47 @@
-name: GH-Actions
+name: CI
+
 on:
   push:
-    branches:
-      - "**"
+    branches: [ main, master ]
+    tags:
+      - "v*"
   pull_request:
-    branches:
-      - "**"
-env:
-  CARGO_TERM_COLOR: always
+    branches: [ main, master ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
 jobs:
-  auth_service_build:
+  build:
+    runs-on: lunar
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest
+
+      - name: Run tests
+        run: python -m pytest src/ -v
+
+      - name: Build Docker image
+        run: docker build --build-arg GIT_SHA=${{ github.sha }} -t pantalasa/auth:${{ github.sha }} .
+
+  sbom:
     runs-on: lunar
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          clean: true
-      - name: Install dependencies
-        run: |
-          python3 -m venv ./venv
-          ./venv/bin/pip wheel -r requirements.txt --wheel-dir=wheels
-          ./venv/bin/pip install --no-index --find-links=wheels -r requirements.txt 
-          ./venv/bin/pip install pytest
-      - name: Run tests
-        run: |
-          ./venv/bin/python -m pytest
+      - name: Install Syft
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+      - name: Generate SBOM
+        run: syft dir:. -o cyclonedx-json=sbom.cyclonedx.json
