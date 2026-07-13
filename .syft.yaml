@@ -1,0 +1,11 @@
+# Scope the SBOM to real package dependencies. The Lunar syft collector pip-installs
+# deps into a temp dir for license detection; by default syft also catalogs every
+# package-owned file and bundled binary as license-less SBOM entries, which tanks
+# license coverage. Capture no per-file entries and skip binary catalogers so the
+# SBOM (and its license coverage) reflects actual dependencies.
+file:
+  metadata:
+    selection: none
+select-catalogers:
+  - package
+  - "-binary"
