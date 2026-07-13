@@ -34,6 +34,11 @@ def quote():
     return random_quote() 
 
 
+@app.route("/healthz")
+def healthz():
+    return "ok", 200
+
+
 
 
 
