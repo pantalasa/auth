@@ -37,3 +37,5 @@ def quote():
 
 
 
+
+# request logging hook (placeholder for future middleware)
