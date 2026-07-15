@@ -3,4 +3,4 @@
 criticality: production
 datadog:
   service: auth
-  dashboard: https://us5.datadoghq.com/dashboard/auth-service-overview
+  dashboard_id: nir-grm-5ge
