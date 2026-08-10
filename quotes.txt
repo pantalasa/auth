@@ -1,3 +1,5 @@
 This a python test quote 1
 This a python test quote 2 
 This a python test quote 3
+
+Integrity is telling yourself the truth. Honesty is telling the truth to other people.
