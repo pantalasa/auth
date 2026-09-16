@@ -1,0 +1,11 @@
+ENG-1813 localdev round: lunar.check.posts / lunar.check.time_to_conclusion
+
+This commit exists to make the hub post a required check on a pull request so
+the new last-mile metrics can be scraped off /metrics:
+
+  1. the block-pr `late-data-present` check is pending while the after-json
+     collector sleeps  -> check_run created, result=in_progress
+  2. the collector lands and the check concludes                -> check_run
+     updated, result=success, plus a time_to_conclusion sample
+  3. a report-pr check fails, so pr_comments.mode=only-failures posts the
+     comment rather than suppressing it                  -> pr_comment created
